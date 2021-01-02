@@ -1,51 +1,65 @@
 import './App.css';
-import { Layout, Typography, Menu, Breadcrumb, Statistic, Row, Col  } from 'antd';
+import { Layout, Typography, Menu } from 'antd';
+import Content1 from './Content1'
+import Content2 from './Content2'
+import Vacaciones from './Vacaciones';
+import Admin from './Admin'
 import SubMenu from 'antd/lib/menu/SubMenu';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+
 const { Title } = Typography;
 const { Header, Footer, Sider, Content } = Layout;
 
 
+
 function App() {
   return (
-    <div className="App">
+    <Router>
       <Layout>
         <Header style={{padding: 10}}>
           <Title style={{color:'white'}} level={3}>Radiología</Title>
         </Header>
         <Layout>
+          
           <Sider>
-            <Menu mode='inline'>
+            <Menu mode='inline' theme='dark'>
               <SubMenu title={ <span>Dashboard</span> }>
-                <Menu.Item key='dashboard'>Operación diaria</Menu.Item>
-                <Menu.Item>Productividad</Menu.Item>
+                  <Menu.Item key='dashboard'>
+                    Operación diaria
+                    <Link to='operacion' />
+                  </Menu.Item>
+                  <Menu.Item>
+                    Productividad
+                    <Link to='productividad' />
+                  </Menu.Item>
               </SubMenu>
               <SubMenu title={ <span>Administrador</span>}>
-                  <Menu.Item key='location1'>Administrar técnico</Menu.Item>
-                  <Menu.Item key='location2'>Modificar vacaciones</Menu.Item>
+                  <Menu.Item key='location1'>
+                    Administrar técnico
+                    <Link to='/admin' />
+                  </Menu.Item>
+                  <Menu.Item key='location2'>
+                    Modificar vacaciones
+                    <Link to='/vacaciones' />
+                  </Menu.Item>
               </SubMenu>
             </Menu>
           </Sider>
+
           <Layout>
-            <Content style={{ padding: '0 50px'}}>
-              <Breadcrumb style={{ margin: '16px 0'}}>
-                <Breadcrumb.Item>Dashboard</Breadcrumb.Item>  
-              </Breadcrumb>
-              <div style={{ background: '#fff', padding:24, minHeight:580}}>
-                <Row gutter={16}>
-                  <Col span={12}>
-                    <Statistic title="Feedback" value={1128}/>
-                  </Col>
-                  <Col span={12}>
-                    <Statistic title="Unmerged" value={93} suffix="/ 100" />
-                  </Col>
-              </Row>
-              </div>
+            <Content style={{ margin: '24px 16px', padding: 30, background: '#fff', minHeight: 450 }}>
+            
+                  <Route path='/operacion' component={Content1}/> 
+                  <Route path='/productividad' component={Content2}/>
+                  <Route path='/admin' component={Admin} />
+                  <Route path='/vacaciones' component={Vacaciones} />
+
             </Content>
             <Footer style={{textAlign: 'center'}}>Product created by the army of two.</Footer>
           </Layout>
         </Layout>
       </Layout>
-    </div>
+    </Router>
   );
 }
 
