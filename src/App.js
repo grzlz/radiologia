@@ -6,6 +6,7 @@ import Vacaciones from './Vacaciones';
 import Admin from './Admin'
 import SubMenu from 'antd/lib/menu/SubMenu';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
+import { ProjectOutlined, DashboardOutlined, UserOutlined, CalendarOutlined } from '@ant-design/icons'
 
 const { Title } = Typography;
 const { Header, Footer, Sider, Content } = Layout;
@@ -25,27 +26,30 @@ function App() {
             <Menu mode='inline' theme='dark'>
               <SubMenu title={ <span>Dashboard</span> }>
                   <Menu.Item key='dashboard'>
+                    <ProjectOutlined />
                     Operación diaria
                     <Link to='operacion' />
                   </Menu.Item>
                   <Menu.Item>
+                    <DashboardOutlined />
                     Productividad
                     <Link to='productividad' />
                   </Menu.Item>
-              </SubMenu>
-              <SubMenu title={ <span>Administrador</span>}>
+                </SubMenu>
+                <SubMenu title={ <span>Administrador</span>}>
                   <Menu.Item key='location1'>
-                    Administrar técnico
+                    <UserOutlined />
+                    Administrar
                     <Link to='/admin' />
                   </Menu.Item>
                   <Menu.Item key='location2'>
-                    Modificar vacaciones
+                    <CalendarOutlined />
+                    Vacaciones
                     <Link to='/vacaciones' />
                   </Menu.Item>
-              </SubMenu>
+                </SubMenu>
             </Menu>
           </Sider>
-
           <Layout>
             <Content style={{ margin: '24px 16px', padding: 30, background: '#fff', minHeight: 450 }}>
             
