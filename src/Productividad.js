@@ -2,7 +2,7 @@ import React from 'react'
 
 import { Statistic, Row, Col  } from 'antd';
 
-export default function Content2() {
+export default function Productividad() {
     return (
         <div>
               <div style={{ background: '#fff', padding:24, minHeight:580}}>
