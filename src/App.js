@@ -56,7 +56,7 @@ function App() {
           </Sider>
 
           <Layout>
-            <Content style={{ margin: '24px 16px', padding: 30, background: '#fff', minHeight: 450 }}>
+            <Content style={{ margin: '24px 16px', padding: 30, background: '#fff', minHeight: 920 }}>
 
               <Route path='/operacion' component={Operacion} />
               <Route path='/productividad' component={Productividad} />

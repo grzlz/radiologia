@@ -41,7 +41,7 @@ export default function Productividad() {
   return (
     <div style={{ textAlign: 'center' }}>
 
-      <Button type='primary' onClick={abrirModal} style={{ textAlign: 'center' }}>Botón</Button>
+      <Button type='primary' onClick={abrirModal}>Botón</Button>
       <Modal title='Futbolista' visible={modal} onCancel={cerrarModal} onOk={accion}
         footer={[<Button onClick={cerrarModal}>Cancelar</Button>, <Button type='primary' onClick={accion}>Enviar</Button>]}>
         <Form {...layout}>
