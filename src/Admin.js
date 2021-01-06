@@ -10,6 +10,7 @@ export default function Admin() {
 
     const [data, setData] = useState([])
     const [modalInsertar, setModalInsertar] = useState(false)
+    const [modalEditar, setModalEditar] = useState(false)
     const [tecnico, setTecnico] = useState({
         id: '',
         nombre: '',
@@ -18,16 +19,28 @@ export default function Admin() {
     })
 
     const cambioEnInputModal = e => {
-        const{name, value} = e.target
-        setTecnico({...tecnico, 
-            [name]: value})
+        const { name, value } = e.target
+        setTecnico({
+            ...tecnico,
+            [name]: value
+        })
     }
 
     const abrirCerrarModalInsertar = () => {
         setModalInsertar(!modalInsertar)
     }
 
-    const url = 'http://3.138.183.233/productividad'
+    const abrirCerrarModalEditar = () => {
+        setModalEditar(!modalEditar)
+    }
+
+    const url = 'https://3.138.183.233/productividad'
+
+    const seleccionarTecnico = (tecnico) => {
+        setTecnico(tecnico)
+        abrirCerrarModalEditar()
+        console.log(tecnico)
+    }
 
     const columns = [
         {
@@ -55,9 +68,9 @@ export default function Admin() {
             title: 'Acciones',
             dataIndex: 'acciones',
             key: 'acciones',
-            render: fila => (
+            render: (fila) => (
                 <>
-                    <Button type='primary'>Editar</Button> {"   "}
+                    <Button type='primary' onClick={() => seleccionarTecnico(fila)}>Editar</Button> {"   "}
                     <Button type='danger'>Eliminar</Button>
                 </>
             )
@@ -73,18 +86,29 @@ export default function Admin() {
 
 
     const peticionPost = async () => {
-        await axios.post('http://3.138.183.233/post', tecnico)
+        await axios.post('https://3.138.183.233/post', tecnico)
             .then(response => {
                 setData(response.data)
                 abrirCerrarModalInsertar()
             }).catch(error => { console.log(error) })
     }
 
+    const peticionPut = () => {
+        console.log('diste click en editar')
+    }
+
     useEffect(() => {
         peticionGet()
     }, [])
 
-
+    const layout = {
+        labelCol: {
+            span: 5
+        },
+        wrapperCol: {
+            span: 16
+        }
+    }
     return (
         <div className='App'>
             <Table columns={columns} dataSource={data} />
@@ -93,26 +117,45 @@ export default function Admin() {
             <Modal visible={modalInsertar} title='Agregar técnico'
                 destroyOnClose={true} onCancel={abrirCerrarModalInsertar}
                 centered
-                footer={[<Button onClick={abrirCerrarModalInsertar}>Cancelar</Button>,<Button className='botonInsertar' onClick={peticionPost}>Agregar</Button>]}>
+                footer={[<Button onClick={abrirCerrarModalInsertar}>Cancelar</Button>, <Button className='botonInsertar' onClick={peticionPost}>Agregar</Button>]}>
 
-                    <Form>
-                        <Item label='ID'>
-                            <Input name='id' onChange={cambioEnInputModal}/>
-                        </Item>
+                <Form {...layout}>
+                    <Item label='ID'>
+                        <Input name='id' onChange={cambioEnInputModal} />
+                    </Item>
 
-                        <Item label='Nombre'>
-                            <Input name='nombre'onChange={cambioEnInputModal}/>
-                        </Item>
-                        <Item label='Servicio'>
-                            <Input name='servicio'onChange={cambioEnInputModal}/>
-                        </Item>
-                        <Item label='Cantidad'>
-                            <Input name='cantidad'onChange={cambioEnInputModal}/>
-                        </Item>
+                    <Item label='Nombre'>
+                        <Input name='nombre' onChange={cambioEnInputModal} />
+                    </Item>
+                    <Item label='Servicio'>
+                        <Input name='servicio' onChange={cambioEnInputModal} />
+                    </Item>
+                    <Item label='Cantidad'>
+                        <Input name='cantidad' onChange={cambioEnInputModal} />
+                    </Item>
+                </Form>
+            </Modal>
 
-                    </Form>
+            <Modal visible={modalEditar} title='Editar técnico'
+                onCancel={abrirCerrarModalEditar}
+                centered
+                footer={[<Button onClick={abrirCerrarModalEditar}>Cancelar</Button>, <Button className='botonInsertar' onClick={peticionPut}>Editar</Button>]}>
 
+                <Form {...layout}>
+                    <Item label='ID'>
+                        <Input name='id' onChange={cambioEnInputModal} value={tecnico && tecnico.id} />
+                    </Item>
 
+                    <Item label='Nombre'>
+                        <Input name='nombre' onChange={cambioEnInputModal} value={tecnico && tecnico.nombre} />
+                    </Item>
+                    <Item label='Servicio'>
+                        <Input name='servicio' onChange={cambioEnInputModal} value={tecnico && tecnico.servicio} />
+                    </Item>
+                    <Item label='Cantidad'>
+                        <Input name='cantidad' onChange={cambioEnInputModal} value={tecnico && tecnico.cantidad} />
+                    </Item>
+                </Form>
             </Modal>
         </div>
     )
