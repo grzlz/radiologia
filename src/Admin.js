@@ -24,6 +24,7 @@ export default function Admin() {
             ...tecnico,
             [name]: value
         })
+        console.log(tecnico)
     }
 
     const abrirCerrarModalInsertar = () => {
@@ -36,10 +37,12 @@ export default function Admin() {
 
     const url = 'https://3.138.183.233/productividad'
 
-    const seleccionarTecnico = (tecnico) => {
-        setTecnico(tecnico)
-        abrirCerrarModalEditar()
+    const seleccionarTecnico = (fila) => {
         console.log(tecnico)
+        console.log(fila)
+        setTecnico(fila)
+        console.log(tecnico)
+        abrirCerrarModalEditar()
     }
 
     const columns = [
@@ -70,8 +73,7 @@ export default function Admin() {
             key: 'acciones',
             render: (fila) => (
                 <>
-                    <Button type='primary' onClick={() => seleccionarTecnico(fila)}>Editar</Button> {"   "}
-                    <Button type='danger'>Eliminar</Button>
+                    <Button type='primary' onClick={() => seleccionarTecnico(fila)}>Editar</Button>
                 </>
             )
         }
