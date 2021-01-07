@@ -5,9 +5,10 @@ import Operacion from './Operacion'
 import Productividad from './Productividad'
 import Vacaciones from './Vacaciones';
 import Admin from './Admin'
+import Formulario from './Formulario'
 import SubMenu from 'antd/lib/menu/SubMenu';
 import { BrowserRouter as Router, Route, Link } from 'react-router-dom'
-import { ProjectOutlined, DashboardOutlined, UserOutlined, CalendarOutlined, BarChartOutlined, TeamOutlined } from '@ant-design/icons'
+import { ProjectOutlined, DashboardOutlined, UserOutlined, CalendarOutlined, BarChartOutlined, TeamOutlined, FileTextOutlined } from '@ant-design/icons'
 
 
 const { Title } = Typography;
@@ -47,9 +48,15 @@ function App() {
                     <Link to='/admin' />
                 </Menu.Item>
                 <Menu.Item key='location2'>
-                    <CalendarOutlined />
+                  <CalendarOutlined />
                     Vacaciones
                     <Link to='/vacaciones' />
+                </Menu.Item>
+
+                <Menu.Item>
+                  <FileTextOutlined />
+                    Formulario
+                    <Link to='/formulario' />
                 </Menu.Item>
               </SubMenu>
             </Menu>
@@ -62,6 +69,7 @@ function App() {
               <Route path='/productividad' component={Productividad} />
               <Route path='/admin' component={Admin} />
               <Route path='/vacaciones' component={Vacaciones} />
+              <Route path='/formulario' component={Formulario} />
 
             </Content>
             <Footer style={{ textAlign: 'center' }}>Product created by the army of two.</Footer>

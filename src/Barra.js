@@ -7,7 +7,7 @@ export default function Barra() {
 
     const [data, setData] = useState([])
     
-    const url = 'https://3.138.183.233/productividad'
+    const url = 'http://localhost:5000/productividad'
 
     const peticionGet = async () => {
         await axios.get(url)

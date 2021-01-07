@@ -14,13 +14,6 @@ export default function Operacion() {
         <Col xs={24} sm={12} md={12} lg={12}>
           <div> <Vacaciones /></div>
         </Col>
-        <Col xs={24} sm={12} md={4} lg={6}>
-          <div style={{background:'green', textAlign:'center'}}>Columna3</div>
-        </Col>
-
-        <Col xs={24} sm={12} md={4} lg={2}>
-          <div style={{background:'green', textAlign:'center'}}>Columna4</div>
-        </Col>
       </Row>
 
     </div>

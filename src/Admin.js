@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { Table, Button, Modal, Form, Input } from 'antd'
+import { Table, Button, Modal, Form, Input, message, DatePicker } from 'antd'
 import 'antd/dist/antd.css'
 import './App.css'
+import 'moment/locale/es'
+import locale from 'antd/es/date-picker/locale/es_ES'
 import axios from 'axios'
 
 const { Item } = Form
@@ -24,7 +26,6 @@ export default function Admin() {
             ...tecnico,
             [name]: value
         })
-        console.log(tecnico)
     }
 
     const abrirCerrarModalInsertar = () => {
@@ -35,13 +36,35 @@ export default function Admin() {
         setModalEditar(!modalEditar)
     }
 
-    const url = 'https://3.138.183.233/productividad'
+    const url = 'http://localhost:5000/productividad'
 
-    const seleccionarTecnico = (fila) => {
-        console.log(tecnico)
-        console.log(fila)
-        setTecnico(fila)
-        console.log(tecnico)
+    const peticionGet = async () => {
+        await axios.get(url)
+            .then(response => {
+                setData(response.data)
+            }).catch(error => { console.log(error) })
+    }
+
+
+    const peticionPost = async () => {
+        await axios.post('http://127.0.0.1:5000/post', tecnico)
+            .then(response => {
+                setData(data.concat(response.data))
+                abrirCerrarModalInsertar()
+            }).catch(error => { console.log(error) })
+    }
+
+    const peticionPut = () => {
+        message.success('Editado correctamente')
+    }
+
+    useEffect(() => {
+        peticionGet()
+    }, [])
+
+
+    const seleccionarTecnico = (texto, i) => {
+        setTecnico(i)
         abrirCerrarModalEditar()
     }
 
@@ -68,40 +91,17 @@ export default function Admin() {
         },
 
         {
-            title: 'Acciones',
+            title: '',
             dataIndex: 'acciones',
             key: 'acciones',
-            render: (fila) => (
+            render: (text, i) => (
                 <>
-                    <Button type='primary' onClick={() => seleccionarTecnico(fila)}>Editar</Button>
+                    <Button type='primary' onClick={() => seleccionarTecnico(text, i)}>Editar</Button>
                 </>
             )
-        }
+        },
     ]
 
-    const peticionGet = async () => {
-        await axios.get(url)
-            .then(response => {
-                setData(response.data)
-            }).catch(error => { console.log(error) })
-    }
-
-
-    const peticionPost = async () => {
-        await axios.post('https://3.138.183.233/post', tecnico)
-            .then(response => {
-                setData(response.data)
-                abrirCerrarModalInsertar()
-            }).catch(error => { console.log(error) })
-    }
-
-    const peticionPut = () => {
-        console.log('diste click en editar')
-    }
-
-    useEffect(() => {
-        peticionGet()
-    }, [])
 
     const layout = {
         labelCol: {
@@ -156,6 +156,9 @@ export default function Admin() {
                     </Item>
                     <Item label='Cantidad'>
                         <Input name='cantidad' onChange={cambioEnInputModal} value={tecnico && tecnico.cantidad} />
+                    </Item>
+                    <Item label='Vacaciones' name='fecha'>
+                        <DatePicker.RangePicker locale={locale}  style={{width: '100%'}}/>
                     </Item>
                 </Form>
             </Modal>
